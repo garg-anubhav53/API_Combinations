@@ -1,21 +1,37 @@
 import requests
 import json
 
-WeatherUrl = "https://us-weather-by-zip-code.p.rapidapi.com/getweatherzipcode"
+zip = 94111
+ZipString = str(zip)
 
-querystring = {"zip":"94111"}
+
+# weatherUrl = "https://us-weather-by-zip-code.p.rapidapi.com/getweatherzipcode"
+
+# querystring = {"zip": ZipString}
+
+# headers = {
+# 	"X-RapidAPI-Key": "6795ba421bmsh8f363c73274493bp14dbb7jsn03a28699e5d0",
+# 	"X-RapidAPI-Host": "us-weather-by-zip-code.p.rapidapi.com"
+# }
+
+# response = requests.get(weatherUrl, headers=headers, params=querystring)
+
+# print(response.json())
+
+# print(response.json()['City'])
+
+url = "https://api.rentcast.io/v1/markets?"
 
 headers = {
-	"X-RapidAPI-Key": "6795ba421bmsh8f363c73274493bp14dbb7jsn03a28699e5d0",
-	"X-RapidAPI-Host": "us-weather-by-zip-code.p.rapidapi.com"
+    "accept": "application/json",
+    "X-Api-Key": "7bb22ecba95544d4bab9191475a5bd92"
 }
 
-response = requests.get(WeatherURL, headers=headers, params=querystring)
+housingParams = {
+    "zipCode" : zip, 
+    "historyRange" : '6'
+}
 
-print(response.json())
+response = requests.get(url, headers=headers, params = housingParams)
 
-# data = json.loads(response.json().toString())
-
-# print(data['city'])
-
-print(response.json()['City'])
+print (response.json())
