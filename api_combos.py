@@ -1,6 +1,7 @@
 import requests
 import json
 import pandas as pd
+from utils import latitude as l 
 
 
 # function will return some weather data for a given zip code
@@ -10,7 +11,7 @@ def getWeatherOutput (ZipString):
 	querystring = {"zip": ZipString}
 
 	headers = {
-		"X-RapidAPI-Key": "6795ba421bmsh8f363c73274493bp14dbb7jsn03a28699e5d0",
+		"X-RapidAPI-Key": l.xrakey,
 		"X-RapidAPI-Host": "us-weather-by-zip-code.p.rapidapi.com"
 	}
 
@@ -25,7 +26,7 @@ def getHousingOutput(ZipString) :
 
 	headers = {
 		"accept": "application/json",
-		"X-Api-Key": "7bb22ecba95544d4bab9191475a5bd92"
+		"X-Api-Key": l.rcakey
 	}
 
 	housingParams = {
