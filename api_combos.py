@@ -1,5 +1,7 @@
 import requests
 import json
+import pandas as pd
+
 
 # function will return some weather data for a given zip code
 def getWeatherOutput (ZipString):
@@ -39,22 +41,32 @@ def getHousingOutput(ZipString) :
 	print (response.json())
 	return response.json()
 
+# try to implement a slightly better output, perhaps by converting dictionary to tables
+def exportPrettyTable(dictionary, zipcodes):
+	# df = pd.DataFrame(dictionary, columns = ['City', 'AQI', 'Wind (MPH)', 'averageRent', 'totalListings'], 
+				#    index=[zipcodes[0],zipcodes[1], zipcodes[2], zipcodes[3], zipcodes[4]])
+	# df = pd.DataFrame.from_dict(dictionary, index= ['City', 'AQI', 'Wind (MPH)', 'averageRent', 'totalListings'])
+	
+	df = pd.DataFrame.from_dict(dictionary)
+	return df
 
 def main(): 
 	zipcodes = [94111, 46077, 46113, 52227, 49501]
-	resultsDict = []
+	resultsDict = {}
 	for zip in zipcodes: 
 		ZipString = str(zip)
 		weatherOutput = getWeatherOutput(ZipString)
 		housingOutput = getHousingOutput(ZipString)
-		resultsDict.append(zip, 
+		resultsDict[zip] = [
 					 weatherOutput['City'], 
 					 weatherOutput['AirQualityIndex'], 
 					 weatherOutput['WindMPH'], 
 					 housingOutput['rentalData']['averageRent'], 
-					 housingOutput['rentalData']['totalListings'])
-	
-	print("This is the result of the full dict: ", resultsDict)
+					 housingOutput['rentalData']['totalListings']
+		]
+
+	print ("Below is a output of information for the provided zip codes")
+	print (exportPrettyTable(resultsDict, zipcodes))
 
 if __name__ == "__main__":
     main()
