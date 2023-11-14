@@ -1,11 +1,6 @@
 import requests
 import json
 
-
-zip = 94111
-ZipString = str(zip)
-
-
 # function will return some weather data for a given zip code
 def getWeatherOutput (ZipString):
 	weatherUrl = "https://us-weather-by-zip-code.p.rapidapi.com/getweatherzipcode"
@@ -22,6 +17,7 @@ def getWeatherOutput (ZipString):
 	print(response.json())
 
 	print(response.json()['City'])
+	return response.json()
 	
 
 # function will return some housing data for a given zip code
@@ -41,3 +37,27 @@ def getHousingOutput(ZipString) :
 	response = requests.get(url, headers=headers, params = housingParams)
 
 	print (response.json())
+	return response.json()
+
+
+def main(): 
+	zipcodes = [94111, 46077, 46113, 52227, 49501]
+	resultsDict = []
+	for zip in zipcodes: 
+		ZipString = str(zip)
+		weatherOutput = getWeatherOutput(ZipString)
+		housingOutput = getHousingOutput(ZipString)
+		resultsDict.append(zip, 
+					 weatherOutput['City'], 
+					 weatherOutput['AirQualityIndex'], 
+					 weatherOutput['WindMPH'], 
+					 housingOutput['rentalData']['averageRent'], 
+					 housingOutput['rentalData']['totalListings'])
+	
+	print("This is the result of the full dict: ", resultsDict)
+
+if __name__ == "__main__":
+    main()
+
+
+
