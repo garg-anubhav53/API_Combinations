@@ -16,9 +16,6 @@ def getWeatherOutput (ZipString):
 
 	response = requests.get(weatherUrl, headers=headers, params=querystring)
 
-	print(response.json())
-
-	print(response.json()['City'])
 	return response.json()
 	
 
@@ -38,7 +35,6 @@ def getHousingOutput(ZipString) :
 
 	response = requests.get(url, headers=headers, params = housingParams)
 
-	print (response.json())
 	return response.json()
 
 # try to implement a slightly better output, perhaps by converting dictionary to tables
@@ -51,7 +47,9 @@ def exportPrettyTable(dictionary, zipcodes):
 	return df
 
 def main(): 
-	zipcodes = [94111, 46077, 46113, 52227, 49501]
+	zip_prompt = input("Please enter a comma seperated list of zip codes you would like some information for: \n")
+	zipcodes = zip_prompt.split(',')
+	
 	resultsDict = {}
 	for zip in zipcodes: 
 		ZipString = str(zip)
